@@ -4,6 +4,14 @@ html {
     sans-serif;
 }
 
+body {
+  background-color: rgb(245, 245, 245);
+}
+
+a {
+  text-decoration: none;
+}
+
 .container {
   margin: 80px auto 0 auto;
   max-width: 1200px;
