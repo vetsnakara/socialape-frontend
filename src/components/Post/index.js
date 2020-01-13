@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { Card, CardMedia, Typography, CardContent } from "@material-ui/core";
 
+import datetime from "../../utils/datetime";
+
 import styles from "./styles";
 
 const Post = ({ post, classes }) => {
@@ -33,7 +35,7 @@ const Post = ({ post, classes }) => {
           {userHandle}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          {createdAt}
+          {datetime.fromNow(createdAt)}
         </Typography>
         <Typography variant="body1">{body}</Typography>
       </CardContent>

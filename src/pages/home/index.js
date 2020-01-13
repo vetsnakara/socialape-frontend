@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 
-import Post from "../components/Post";
+import Post from "../../components/Post";
 
-import api from "../services/api";
+import api from "../../services/api";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -18,16 +18,13 @@ const Home = () => {
       .getPosts()
       .then(posts => {
         setError(null);
+        setLoading(false);
         setPosts(posts);
       })
       .catch(error => {
         setError(error);
-        console.log(error);
-      })
-      .finally(() => {
         setLoading(false);
       });
-    setPosts(posts);
   }, []);
 
   return (

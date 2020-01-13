@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const API_ROOT = process.env.REACT_APP_API_ROOT || "http://localhost:3000";
-
 const TIMEOUT = 20000;
 
 const HEADERS = {
@@ -10,13 +8,11 @@ const HEADERS = {
 };
 
 class HttpService {
-  constructor({
-    baseURL = API_ROOT,
-    timeout = TIMEOUT,
-    headers = HEADERS
-  } = {}) {
+  constructor({ baseURL, timeout = TIMEOUT, headers = HEADERS } = {}) {
     this.client = axios.create({ baseURL, timeout, headers });
     this.client.interceptors.response.use(this.handleSuccess, this.handleError);
+
+    // this.client.defaults.proxy.host = "http://localhost:5000";
   }
 
   handleSuccess(response) {
@@ -28,7 +24,13 @@ class HttpService {
   }
 
   get(path) {
-    return this.client.get(path).then(response => response.data);
+    return this.client
+      .get(path, {
+        proxy: {
+          host: "http://localhost:5000"
+        }
+      })
+      .then(response => response.data);
   }
 
   post(path, payload) {
