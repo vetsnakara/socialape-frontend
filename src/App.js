@@ -6,6 +6,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
+
 import AuthProvider from "./contexts/auth";
 import theme from "./styles/theme";
 

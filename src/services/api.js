@@ -6,9 +6,15 @@ const API_ROOT = "/"; // proxy is userd
 const http = new HttpService({ baseURL: API_ROOT });
 
 const api = {
-  getPosts: async () => http.get("/post"),
+  // auth
   login: async user => http.post("/login", user),
-  signup: async user => http.post("/signup", user)
+  signup: async user => http.post("/signup", user),
+
+  // user
+  getUserData: async () => http.get("/user"),
+
+  // post
+  getPosts: async () => http.get("/post")
 };
 
 export default api;
