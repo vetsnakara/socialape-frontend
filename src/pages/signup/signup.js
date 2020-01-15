@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   TextField,
   Grid,
@@ -11,15 +10,18 @@ import {
 
 import AppIcon from "../../images/app-icon.png";
 
-// todo: reuse styles with signup form
 import useStyles from "./styles";
 
-const initialState = { email: "", password: "" };
+const initialState = {
+  handle: "",
+  email: "",
+  password: "",
+  passwordConfirm: ""
+};
 
-const Login = ({ login, loading, error }) => {
+const Signup = ({ signup, loading, error }) => {
   const [user, setUser] = useState(initialState);
   const history = useHistory();
-
   const classes = useStyles({ loading });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -31,7 +33,7 @@ const Login = ({ login, loading, error }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    login(user, history);
+    signup(user, history);
   };
 
   // todo (api):
@@ -50,10 +52,24 @@ const Login = ({ login, loading, error }) => {
       <Grid item sm={5}>
         <img src={AppIcon} alt="App (monkey) Icon" className={classes.image} />
         <Typography variant="h1" className={classes.pageTitle}>
-          Login
+          Signup
         </Typography>
+        {/* todo: extract form component */}
         <form onSubmit={handleSubmit}>
           <div className={classes.textFieldsContainer}>
+            <TextField
+              id="handle"
+              name="handle"
+              type="handle"
+              label="username"
+              className={classes.formField}
+              value={user.handle}
+              onChange={handleChange}
+              fullWidth
+              autoFocus
+              error={error && error.type === "validation" && !!error.handle}
+              helperText={error && error.handle}
+            />
             <TextField
               id="email"
               name="email"
@@ -63,7 +79,6 @@ const Login = ({ login, loading, error }) => {
               value={user.email}
               onChange={handleChange}
               fullWidth
-              autoFocus
               error={error && error.type === "validation" && !!error.email}
               helperText={error && error.email}
             />
@@ -79,6 +94,20 @@ const Login = ({ login, loading, error }) => {
               error={error && error.type === "validation" && !!error.password}
               helperText={error && error.password}
             />
+            <TextField
+              id="passwordConfirm"
+              name="passwordConfirm"
+              type="password"
+              label="confirm password"
+              className={classes.formField}
+              value={user.passwordConfirm}
+              onChange={handleChange}
+              fullWidth
+              error={
+                error && error.type === "validation" && !!error.passwordConfirm
+              }
+              helperText={error && error.passwordConfirm}
+            />
           </div>
 
           <Button
@@ -89,7 +118,7 @@ const Login = ({ login, loading, error }) => {
             disabled={loading}
           >
             <CircularProgress className={classes.buttonProgress} size={30} />
-            <span className={classes.buttonText}>Login</span>
+            <span className={classes.buttonText}>Signup</span>
           </Button>
 
           {error && error.type === "general" && (
@@ -99,7 +128,7 @@ const Login = ({ login, loading, error }) => {
           )}
 
           <small className={classes.signUpLink}>
-            Don't have an account? Sign up <Link to="/signup">here.</Link>
+            Already have an account? Log in <Link to="/login">here.</Link>
           </small>
         </form>
       </Grid>
@@ -107,4 +136,4 @@ const Login = ({ login, loading, error }) => {
   );
 };
 
-export default Login;
+export default Signup;

@@ -64,7 +64,7 @@ export const doLoginUserWithToken = async dispatch => {
   }
 };
 
-export const doLoginUserWithData = (userData, history) => async dispatch => {
+export const doLoginUser = (userData, history) => async dispatch => {
   try {
     dispatch(doFetchStart());
 
@@ -119,9 +119,57 @@ export const doLoginUserWithData = (userData, history) => async dispatch => {
   }
 };
 
-// export const getUserData = () => async dispatch => {
-//   try {
-//     const user = await api.getUserData();
-//     dispatch(doSetUser(user));
-//   } catch (error) {}
-// };
+export const doSignupUser = (userData, history) => async dispatch => {
+  try {
+    dispatch(doFetchStart());
+
+    const { token } = await api.signup(userData);
+
+    const tokenWithBearer = `Bearer ${token}`;
+
+    await dispatch(doAuthUserWithToken(tokenWithBearer));
+
+    localStorage.setItem("token", tokenWithBearer);
+    history.push("/");
+  } catch (error) {
+    const { request, response } = error;
+    if (response) {
+      /*
+       * The request was made and the server responded with a
+       * status code that falls out of the range of 2xx
+       */
+      if (response.status === 400) {
+        dispatch(
+          doSetErrors({
+            type: "validation",
+            ...response.data
+          })
+        );
+      } else if (error.response.status === 403) {
+        dispatch(
+          doSetErrors({
+            type: "general",
+            message: response.data.error
+          })
+        );
+      }
+      // todo: Internal Server Error (500) hadnling
+    } else if (request) {
+      /*
+       * The request was made but no response was received
+       *   - no connection with internet
+       *   - server dont't responses
+       *
+       */
+      dispatch(
+        doSetErrors({
+          type: "network",
+          message: error.code
+        })
+      );
+    } else {
+      // Something happened in setting up the request and triggered an Error
+      dispatch(doSetErrors(error));
+    }
+  }
+};
