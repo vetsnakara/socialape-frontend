@@ -1,10 +1,16 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { withAuth } from "../contexts/auth";
 
-const Logout = ({ setAuthUser }) => {
-  setAuthUser(null);
+import { doLogoutUser } from "../redux/actions/user";
+
+const Logout = ({ logout }) => {
+  logout();
   return <Redirect to="/" />;
 };
 
-export default withAuth(Logout);
+const mapDispatch = dispatch => ({
+  logout: () => dispatch(doLogoutUser)
+});
+
+export default connect(null, mapDispatch)(Logout);

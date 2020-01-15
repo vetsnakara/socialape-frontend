@@ -11,10 +11,13 @@ const api = {
   signup: async user => http.post("/signup", user),
 
   // user
-  getUserData: async () => http.get("/user"),
+  getAuthUserDetails: async () => http.get("/user"),
 
   // post
-  getPosts: async () => http.get("/post")
+  getPosts: async () => http.get("/post"),
+
+  // httpService
+  http
 };
 
 export default api;

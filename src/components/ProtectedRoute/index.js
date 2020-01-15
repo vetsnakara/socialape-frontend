@@ -1,20 +1,20 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Route, Redirect, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 
 const ProtectedRoute = ({
   component: Component,
   render,
   redirectCondition,
   redirectPath = "/",
+  user,
   ...rest
 }) => {
-  const { authUser } = useAuth();
   const location = useLocation();
 
   const { pathname: referrer } = location;
 
-  const isNonAuthorized = redirectCondition(authUser);
+  const isNonAuthorized = redirectCondition(user);
 
   const componentToRender = props => {
     if (isNonAuthorized) {
@@ -26,4 +26,8 @@ const ProtectedRoute = ({
   return <Route {...rest} render={componentToRender} />;
 };
 
-export default ProtectedRoute;
+const mapState = state => ({
+  user: state.user
+});
+
+export default connect(mapState)(ProtectedRoute);

@@ -2,12 +2,15 @@
 // todo: request cancellation is needed when redirect occurs during the request
 // https://github.com/axios/axios/blob/master/README.md#cancellation
 // todo: do 500 and other non user errors error handling in interceptor
+// todo: remove unused code (contexts, e.t.c)
 
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import AuthProvider from "./contexts/auth";
+import { doLoginUserWithToken } from "./redux/actions/user";
+
 import theme from "./styles/theme";
 
 import "./App.css";
@@ -22,34 +25,40 @@ import LoginPage from "./pages/login";
 import SignupPage from "./pages/signup";
 import HomePage from "./pages/home";
 
-function App() {
+const App = ({ loginWithToken }) => {
+  useEffect(() => {
+    loginWithToken();
+  }, []);
+
   return (
     <MuiThemeProvider theme={theme}>
-      <AuthProvider>
-        <Router>
-          <Navbar />
-          <div className="container">
-            <Switch>
-              <Route path="/" exact component={HomePage} />
-              <ProtectedRoute
-                path="/login"
-                component={LoginPage}
-                redirectCondition={user => !!user}
-                redirectPath="/"
-              />
-              <ProtectedRoute
-                path="/signup"
-                component={SignupPage}
-                redirectCondition={user => !!user}
-                redirectPath="/"
-              />
-              <Route path="/logout" component={Logout} />
-            </Switch>
-          </div>
-        </Router>
-      </AuthProvider>
+      <Router>
+        <Navbar />
+        <div className="container">
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+            <ProtectedRoute
+              path="/login"
+              component={LoginPage}
+              redirectCondition={user => user.authenticated}
+              redirectPath="/"
+            />
+            <ProtectedRoute
+              path="/signup"
+              component={SignupPage}
+              redirectCondition={user => user.authenticated}
+              redirectPath="/"
+            />
+            <Route path="/logout" component={Logout} />
+          </Switch>
+        </div>
+      </Router>
     </MuiThemeProvider>
   );
-}
+};
 
-export default App;
+const mapDispatch = dispatch => ({
+  loginWithToken: () => dispatch(doLoginUserWithToken)
+});
+
+export default connect(null, mapDispatch)(App);

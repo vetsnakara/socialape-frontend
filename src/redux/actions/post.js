@@ -19,6 +19,7 @@ export const doFetchPosts = async dispatch => {
     const posts = await api.getPosts();
     dispatch(doSetPosts(posts));
   } catch (error) {
+    // todo: handle errors here
     dispatch(doSetErrors(error));
   }
 };

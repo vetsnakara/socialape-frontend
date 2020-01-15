@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { withAuth } from "../contexts/auth";
 
-// MUI
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 
 const Navbar = ({ user }) => {
@@ -12,7 +10,11 @@ const Navbar = ({ user }) => {
         <Button color="inherit" to="/" component={Link}>
           Home
         </Button>
-        {user ? <NavbarItemsAuth user={user} /> : <NavbarItemsNonAuth />}
+        {user.authenticated ? (
+          <NavbarItemsAuth user={user} />
+        ) : (
+          <NavbarItemsNonAuth />
+        )}
       </Toolbar>
     </AppBar>
   );
@@ -22,7 +24,7 @@ const NavbarItemsAuth = ({ user }) => {
   return (
     <React.Fragment>
       <Button color="inherit" to={`/profile/${user.email}`} component={Link}>
-        {user.email}
+        {user.details.credentials.email}
       </Button>
       <Button color="inherit" to="/logout" component={Link}>
         Logout
@@ -44,4 +46,4 @@ const NavbarItemsNonAuth = () => {
   );
 };
 
-export default withAuth(Navbar);
+export default Navbar;

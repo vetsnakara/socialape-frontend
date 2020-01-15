@@ -48,6 +48,14 @@ class HttpService {
   delete(path) {
     return this.client.delete(path).then(response => response.data);
   }
+
+  setRequestHeader(headerName, headerValue) {
+    this.client.defaults.headers.common[headerName] = headerValue;
+  }
+
+  removeRequestHeader(header) {
+    delete this.client.defaults.headers.common[header];
+  }
 }
 
 export default HttpService;

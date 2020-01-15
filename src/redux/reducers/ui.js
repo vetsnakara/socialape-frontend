@@ -1,6 +1,6 @@
 import { FETCH_START, SET_ERRORS } from "../types/ui";
 import { SET_POSTS } from "../types/post";
-import { SET_USER } from "../types/user";
+import { SET_USER_AUTHENTICATED } from "../types/user";
 
 const initialState = {
   loading: false,
@@ -12,9 +12,9 @@ const uiReducer = (state = initialState, action) => {
     case FETCH_START:
       return applyFetchStart(state);
     case SET_ERRORS:
-      return applySetErrors(state);
+      return applySetErrors(state, action);
     case SET_POSTS:
-    case SET_USER:
+    case SET_USER_AUTHENTICATED:
       return applyResetUiState();
     default:
       return state;
@@ -31,10 +31,12 @@ const applyResetUiState = () => ({
   ...initialState
 });
 
-const applySetErrors = (state, action) => ({
-  ...state,
-  loading: false,
-  errors: action.error
-});
+const applySetErrors = (state, action) => {
+  return {
+    ...state,
+    loading: false,
+    errors: action.error
+  };
+};
 
 export default uiReducer;
