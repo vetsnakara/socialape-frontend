@@ -5,7 +5,7 @@ import { FEATURE_NAME } from "../../redux/actions/user/details";
 
 const mapState = state => ({
   authenticated: state.auth.authenticated,
-  loading: state.loading.includes[FEATURE_NAME],
+  loading: state.loading.includes(FEATURE_NAME),
   user: state.user,
   error: state.error[FEATURE_NAME]
 });

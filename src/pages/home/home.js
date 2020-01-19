@@ -12,7 +12,7 @@ const Home = ({ posts = [], loading, fetchPosts }) => {
   }, []);
 
   return (
-    <Grid container spacing={10}>
+    <Grid container spacing={4}>
       <Grid item sm={8} xs={12}>
         {loading && <p>Loading posts...</p>}
         {/* {error && <p>Something went wrong ..</p>} */}

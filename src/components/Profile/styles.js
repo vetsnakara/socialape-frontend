@@ -18,9 +18,11 @@ export default makeStyles(theme => {
       "& .profile-image": {
         width: 200,
         height: 200,
-        objectFit: "cover",
         maxWidth: "100%",
-        borderRadius: "50%"
+        borderRadius: "50%",
+        "& img": {
+          width: "100%"
+        }
       },
       "& .profile-details": {
         textAlign: "center",

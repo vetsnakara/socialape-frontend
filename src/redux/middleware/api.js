@@ -26,13 +26,13 @@ const apiMiddleware = ({ dispatch }) => next => action => {
       break;
     case "API_SUCCESS":
       const { data } = action.payload;
-      dispatch(setRequestEnd(feature));
       dispatch(setData(feature, data));
+      dispatch(setRequestEnd(feature));
       break;
     case "API_ERROR":
       const { error } = action.payload;
-      dispatch(setRequestEnd(feature));
       dispatch(setError(feature, error));
+      dispatch(setRequestEnd(feature));
       break;
     default:
       next(action); // ???
