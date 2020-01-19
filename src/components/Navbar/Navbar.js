@@ -3,28 +3,24 @@ import { Link } from "react-router-dom";
 
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 
-const Navbar = ({ user }) => {
+const Navbar = ({ auth }) => {
   return (
     <AppBar>
       <Toolbar className="nav-container">
         <Button color="inherit" to="/" component={Link}>
           Home
         </Button>
-        {user.authenticated ? (
-          <NavbarItemsAuth user={user} />
-        ) : (
-          <NavbarItemsNonAuth />
-        )}
+        {auth.authenticated ? <NavbarItemsAuth /> : <NavbarItemsNonAuth />}
       </Toolbar>
     </AppBar>
   );
 };
 
-const NavbarItemsAuth = ({ user }) => {
+const NavbarItemsAuth = () => {
   return (
     <React.Fragment>
-      <Button color="inherit" to={`/profile/${user.email}`} component={Link}>
-        {user.details.credentials.email}
+      <Button color="inherit" to={`/profile`} component={Link}>
+        Profile
       </Button>
       <Button color="inherit" to="/logout" component={Link}>
         Logout

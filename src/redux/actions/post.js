@@ -1,25 +1,21 @@
 import api from "../../services/api";
+import { apiRequest, apiSuccess, apiError } from "../actions/api";
 
-import { SET_POSTS } from "../types/post";
-import { doFetchStart, doSetErrors } from "./ui";
+export const FEATURE_NAME = "posts"; // scope?
 
-/*
- * Sync Actions
- */
+// action types
+export const POSTS_SET_DATA = "POSTS_SET_DATA";
 
-const doSetPosts = posts => ({ type: SET_POSTS, posts });
+// action creators
+export const fetchPosts = () => apiRequest(FEATURE_NAME, getPosts);
+const setData = data => apiSuccess(FEATURE_NAME, data);
+const setError = error => apiError(FEATURE_NAME, error);
 
-/*
- * Async Actions
- */
-
-export const doFetchPosts = async dispatch => {
+const getPosts = async dispatch => {
   try {
-    dispatch(doFetchStart());
     const posts = await api.getPosts();
-    dispatch(doSetPosts(posts));
+    dispatch(setData(posts));
   } catch (error) {
-    // todo: handle errors here
-    dispatch(doSetErrors(error));
+    dispatch(setError({ error: "Somthing goes wrong" }));
   }
 };

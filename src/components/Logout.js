@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import { doLogoutUser } from "../redux/actions/user";
+import { unauthUser } from "../redux/actions/auth";
 
 const Logout = ({ logout }) => {
   logout();
@@ -10,7 +10,7 @@ const Logout = ({ logout }) => {
 };
 
 const mapDispatch = dispatch => ({
-  logout: () => dispatch(doLogoutUser)
+  logout: () => dispatch(unauthUser())
 });
 
 export default connect(null, mapDispatch)(Logout);

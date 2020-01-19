@@ -1,37 +1,27 @@
-import {
-  SET_USER_AUTHENTICATED,
-  SET_USER_UNAUTHENTICATED
-} from "../types/user";
+import { UNAUTH_SET_DATA } from "../actions/auth";
+import { USER_DETAILS_SET_DATA } from "../actions/user/details";
 
 const initialState = {
-  authenticated: false,
-  details: {
-    credentials: {},
-    likes: [],
-    notifications: []
-  }
+  credentials: {},
+  likes: [],
+  notifications: []
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_USER_AUTHENTICATED:
-      return applySetUserAuthenticated(action);
-    case SET_USER_UNAUTHENTICATED:
-      return applySetUserUnauthenticated();
+    case USER_DETAILS_SET_DATA:
+      return setUserDetails(action);
+    case UNAUTH_SET_DATA:
+      return clearUserDetails();
     default:
       return state;
   }
 };
 
-const applySetUserAuthenticated = action => ({
-  authenticated: true,
-  details: {
-    ...action.userDetails
-  }
+const setUserDetails = action => ({
+  ...action.payload.data
 });
 
-const applySetUserUnauthenticated = () => ({
-  ...initialState
-});
+const clearUserDetails = action => initialState;
 
 export default userReducer;

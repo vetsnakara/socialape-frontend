@@ -1,15 +1,13 @@
 // todo: add toast notifications
+// todo: add proptypes everywhere
 // todo: request cancellation is needed when redirect occurs during the request
 // https://github.com/axios/axios/blob/master/README.md#cancellation
 // todo: do 500 and other non user errors error handling in interceptor
 // todo: remove unused code (contexts, e.t.c)
 
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-
-import { doLoginUserWithToken } from "./redux/actions/user";
 
 import theme from "./styles/theme";
 
@@ -25,11 +23,7 @@ import LoginPage from "./pages/login";
 import SignupPage from "./pages/signup";
 import HomePage from "./pages/home";
 
-const App = ({ loginWithToken }) => {
-  useEffect(() => {
-    loginWithToken();
-  }, []);
-
+const App = () => {
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
@@ -57,8 +51,4 @@ const App = ({ loginWithToken }) => {
   );
 };
 
-const mapDispatch = dispatch => ({
-  loginWithToken: () => dispatch(doLoginUserWithToken)
-});
-
-export default connect(null, mapDispatch)(App);
+export default App;

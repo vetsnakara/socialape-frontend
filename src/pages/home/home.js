@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 
 import Post from "../../components/Post";
+import Profile from "../../components/Profile";
 
-const Home = ({ posts, loading, error, fetchPosts }) => {
+const Home = ({ posts = [], loading, fetchPosts }) => {
   useEffect(() => {
     if (posts.length === 0) {
       fetchPosts();
@@ -13,14 +14,14 @@ const Home = ({ posts, loading, error, fetchPosts }) => {
   return (
     <Grid container spacing={10}>
       <Grid item sm={8} xs={12}>
-        {loading && <p>Loading ...</p>}
-        {error && <p>Something went wrong ..</p>}
+        {loading && <p>Loading posts...</p>}
+        {/* {error && <p>Something went wrong ..</p>} */}
         {posts.map(post => (
           <Post key={post.id} post={post} />
         ))}
       </Grid>
       <Grid item sm={4} xs={12}>
-        <p>Profile ...</p>
+        <Profile />
       </Grid>
     </Grid>
   );
