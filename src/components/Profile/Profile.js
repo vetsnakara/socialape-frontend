@@ -3,18 +3,33 @@
 
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Paper, Button, Link as MuiLink, Typography } from "@material-ui/core";
 import {
-  LocationOn,
+  Paper,
+  Button,
+  Link as MuiLink,
+  Typography,
+  IconButton,
+  Tooltip
+} from "@material-ui/core";
+import {
+  LocationOn as LocationOnIcon,
   Link as LinkIcon,
-  CalendarToday
+  CalendarToday as CalendarTodayIcon,
+  Edit as EditIcon
 } from "@material-ui/icons";
 
 import datetime from "../../utils/datetime";
 
 import useStyles from "./styles";
 
-const Profile = ({ user, authenticated, loading, error, fetchUser }) => {
+const Profile = ({
+  user,
+  authenticated,
+  loading,
+  error,
+  fetchUser,
+  uploadImage
+}) => {
   useEffect(() => {
     if (authenticated) fetchUser();
   }, []);
@@ -22,7 +37,7 @@ const Profile = ({ user, authenticated, loading, error, fetchUser }) => {
   if (loading) return <p>Loading ...</p>;
 
   const content = authenticated ? (
-    <ProfileAuth user={user} />
+    <ProfileAuth user={user} uploadImage={uploadImage} />
   ) : (
     <ProfileNonAuth />
   );
@@ -30,18 +45,38 @@ const Profile = ({ user, authenticated, loading, error, fetchUser }) => {
   return content;
 };
 
-const ProfileAuth = ({ user }) => {
+const ProfileAuth = ({ user, uploadImage }) => {
   const classes = useStyles();
 
   const {
     credentials: { handle, createdAt, imgUrl, website, location, bio }
   } = user;
 
+  const handleImageChange = e => {
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    uploadImage(formData);
+  };
+
+  const handleEditPicture = () => document.querySelector("#imageInput").click();
+
   return (
     <Paper className={classes.paper}>
       <div className={classes.profile}>
         <div className="image-wrapper">
           <img src={imgUrl} alt="Profile" className="profile-image" />
+          <input
+            type="file"
+            onChange={handleImageChange}
+            id="imageInput"
+            hidden="hidden"
+          />
+          <Tooltip title="Edit profile picture" placement="top">
+            <IconButton onClick={handleEditPicture} className="button">
+              <EditIcon color="primary" />
+            </IconButton>
+          </Tooltip>
         </div>
         <hr />
         <div className="profile-details">
@@ -58,7 +93,7 @@ const ProfileAuth = ({ user }) => {
           <hr />
           {location && (
             <React.Fragment>
-              <LocationOn color="primary" /> <span>{location}</span>
+              <LocationOnIcon color="primary" /> <span>{location}</span>
               <hr />
             </React.Fragment>
           )}
@@ -72,7 +107,7 @@ const ProfileAuth = ({ user }) => {
               <hr />
             </React.Fragment>
           )}
-          <CalendarToday color="primary" />{" "}
+          <CalendarTodayIcon color="primary" />{" "}
           <span>Joined {datetime.format(createdAt, "MM YYYY")}</span>
         </div>
       </div>

@@ -12,6 +12,7 @@ const api = {
 
   // user
   getAuthUserDetails: async () => http.get("/user"),
+  uploadImage: async image => http.post("/user/image", image),
 
   // post
   getPosts: async () => http.get("/post"),
