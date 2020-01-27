@@ -22,8 +22,8 @@ const NavbarItemsAuth = () => {
       <Button color="inherit" to={`/profile`} component={Link}>
         Profile
       </Button>
-      <Button color="inherit" to="/logout" component={Link}>
-        Logout
+      <Button color="inherit" to="/signout" component={Link}>
+        Signout
       </Button>
     </React.Fragment>
   );
@@ -32,8 +32,8 @@ const NavbarItemsAuth = () => {
 const NavbarItemsNonAuth = () => {
   return (
     <React.Fragment>
-      <Button color="inherit" to="/login" component={Link}>
-        Login
+      <Button color="inherit" to="/signin" component={Link}>
+        Signin
       </Button>
       <Button color="inherit" to="/signup" component={Link}>
         Signup

@@ -48,6 +48,9 @@ export default makeStyles(theme => {
       "& a": {
         margin: "20px 10px"
       }
+    },
+    buttonsAuth: {
+      marginTop: 15
     }
   };
 });

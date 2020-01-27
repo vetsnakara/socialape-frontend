@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Route, Redirect, useLocation } from "react-router-dom";
 
 const ProtectedRoute = ({
@@ -7,14 +6,13 @@ const ProtectedRoute = ({
   render,
   redirectCondition,
   redirectPath = "/",
-  user,
   ...rest
 }) => {
   const location = useLocation();
 
   const { pathname: referrer } = location;
 
-  const isNonAuthorized = redirectCondition(user);
+  const isNonAuthorized = redirectCondition();
 
   const componentToRender = props => {
     if (isNonAuthorized) {
@@ -26,8 +24,4 @@ const ProtectedRoute = ({
   return <Route {...rest} render={componentToRender} />;
 };
 
-const mapState = state => ({
-  user: state.user
-});
-
-export default connect(mapState)(ProtectedRoute);
+export default ProtectedRoute;

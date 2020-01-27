@@ -3,6 +3,8 @@
 
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+
+// Material UI
 import {
   Paper,
   Button,
@@ -11,15 +13,22 @@ import {
   IconButton,
   Tooltip
 } from "@material-ui/core";
+
 import {
   LocationOn as LocationOnIcon,
   Link as LinkIcon,
   CalendarToday as CalendarTodayIcon,
-  Edit as EditIcon
+  Edit as EditIcon,
+  KeyboardReturn as KeyboardReturnIcon
 } from "@material-ui/icons";
 
+// componetns
+import EditDetails from "../EditDetails";
+
+// utils
 import datetime from "../../utils/datetime";
 
+// styles
 import useStyles from "./styles";
 
 const Profile = ({
@@ -27,17 +36,18 @@ const Profile = ({
   authenticated,
   loading,
   error,
+  signOut,
   fetchUser,
   uploadImage
 }) => {
   useEffect(() => {
-    if (authenticated) fetchUser();
+    if (authenticated && !user) fetchUser();
   }, []);
 
   if (loading) return <p>Loading ...</p>;
 
-  const content = authenticated ? (
-    <ProfileAuth user={user} uploadImage={uploadImage} />
+  const content = user ? (
+    <ProfileAuth user={user} uploadImage={uploadImage} signOut={signOut} />
   ) : (
     <ProfileNonAuth />
   );
@@ -45,7 +55,7 @@ const Profile = ({
   return content;
 };
 
-const ProfileAuth = ({ user, uploadImage }) => {
+const ProfileAuth = ({ user, uploadImage, signOut }) => {
   const classes = useStyles();
 
   const {
@@ -109,6 +119,14 @@ const ProfileAuth = ({ user, uploadImage }) => {
           )}
           <CalendarTodayIcon color="primary" />{" "}
           <span>Joined {datetime.format(createdAt, "MM YYYY")}</span>
+          <div className={classes.buttonsAuth}>
+            <IconButton onClick={signOut}>
+              <Tooltip title="Logout" placement="top">
+                <KeyboardReturnIcon color="primary" />
+              </Tooltip>
+            </IconButton>
+            <EditDetails currentDetails={user.credentials} />
+          </div>
         </div>
       </div>
     </Paper>
@@ -126,7 +144,7 @@ const ProfileNonAuth = () => {
             variant="outlined"
             color="primary"
             component={Link}
-            to="/login"
+            to="/signin"
           >
             Login
           </Button>

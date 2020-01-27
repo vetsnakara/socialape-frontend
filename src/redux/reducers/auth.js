@@ -1,6 +1,4 @@
-import { UNAUTH_SET_DATA } from "../actions/auth";
-import { SIGN_IN_SET_DATA } from "../actions/user/signin";
-import { SIGN_UP_SET_DATA } from "../actions/user/signup";
+import { SET_USER_AUTH, SET_USER_UNAUTH } from "../actions/auth";
 
 const initialState = {
   authenticated: false
@@ -8,10 +6,9 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SIGN_IN_SET_DATA:
-    case SIGN_UP_SET_DATA:
+    case SET_USER_AUTH:
       return applyAuth();
-    case UNAUTH_SET_DATA:
+    case SET_USER_UNAUTH:
       return applyUnauth();
     default:
       return state;

@@ -1,20 +1,21 @@
-export const API_REQUEST = "API_REQUEST";
-export const API_SUCCESS = "API_SUCCESS";
-export const API_ERROR = "API_ERROR";
+const createApiActions = actionType => ({
+  apiRequest: (thunk, data) => ({
+    type: `${actionType} (pending)`,
+    payload: { thunk, data },
+    meta: { actionType }
+  }),
 
-export const apiRequest = (feature, thunk, args) => {
-  return {
-    type: API_REQUEST,
-    payload: { feature, thunk, args }
-  };
-};
+  apiSuccess: successAction => ({
+    type: `${actionType} (success)`,
+    payload: { successAction },
+    meta: { actionType }
+  }),
 
-export const apiSuccess = (feature, data) => ({
-  type: API_SUCCESS,
-  payload: { feature, data }
+  apiError: errorAction => ({
+    type: `${actionType} (error)`,
+    payload: { errorAction },
+    meta: { actionType }
+  })
 });
 
-export const apiError = (feature, error) => ({
-  type: API_ERROR,
-  payload: { feature, error }
-});
+export default createApiActions;

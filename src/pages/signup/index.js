@@ -1,17 +1,17 @@
 import SignupPage from "./signup";
 import { connect } from "react-redux";
 
-import { FEATURE_NAME, doSignupUser } from "../../redux/actions/user/signup";
+import { SIGN_UP, signUp } from "../../redux/actions/auth";
 
 const mapState = state => {
   return {
-    loading: state.loading.includes(FEATURE_NAME),
-    error: state.error[FEATURE_NAME]
+    loading: state.loading.includes(SIGN_UP),
+    error: state.errors[SIGN_UP]
   };
 };
 
 const mapDispatch = dispatch => ({
-  signup: (userData, history) => dispatch(doSignupUser({ userData, history }))
+  signUp: userData => dispatch(signUp(userData))
 });
 
 export default connect(mapState, mapDispatch)(SignupPage);

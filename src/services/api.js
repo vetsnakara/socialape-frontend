@@ -7,11 +7,12 @@ const http = new HttpService({ baseURL: API_ROOT });
 
 const api = {
   // auth
-  login: async user => http.post("/login", user),
+  signin: async user => http.post("/login", user),
   signup: async user => http.post("/signup", user),
 
   // user
   getAuthUserDetails: async () => http.get("/user"),
+  setUserDetails: async details => http.post("/user", details),
   uploadImage: async image => http.post("/user/image", image),
 
   // post

@@ -22,7 +22,43 @@ class HttpService {
   }
 
   errorInterceptor(error) {
-    return Promise.reject(error);
+    const errorHandlers = {
+      requestReceived: ({ response }) => {
+        if (response.status === 400) {
+          return {
+            type: "validation",
+            ...response.data
+          };
+        } else if (response.status === 403) {
+          return {
+            type: "general",
+            message: response.data.error
+          };
+        } else if (response.status === 404) {
+          return {
+            type: "general",
+            message: response.data.message
+          };
+        }
+
+        // todo: Internal Server Error (500) hadnling
+      },
+
+      responseNotReceived: error => {
+        return {
+          type: "network",
+          message: error.code
+        };
+      },
+
+      setupRequestFailed: error => error
+    };
+
+    const handledError = handleError(error, errorHandlers);
+
+    console.log(handledError);
+
+    return Promise.reject(handledError);
   }
 
   get(path) {
@@ -60,19 +96,19 @@ export const handleError = (error, errorHandlers) => {
      * The request was made and the server responded with a
      * status code that falls out of the range of 2xx
      */
-    errorHandlers.requestReceived(error);
+    return errorHandlers.requestReceived(error);
   } else if (error.request) {
     /*
      * The request was made but no response was received
      *   - no connection with internet
      *   - server dont't responses
      */
-    errorHandlers.requestNotReceived(error);
+    return errorHandlers.requestNotReceived(error);
   } else {
     /*
      * Something happened in setting up the request and triggered an Error
      */
-    errorHandlers.setupRequestFailed(error);
+    return errorHandlers.setupRequestFailed(error);
   }
 };
 

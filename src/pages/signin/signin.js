@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   TextField,
@@ -16,9 +15,8 @@ import useStyles from "./styles";
 
 const initialState = { email: "", password: "" };
 
-const Login = ({ login, loading, error }) => {
+const SignIn = ({ signIn, loading, error }) => {
   const [user, setUser] = useState(initialState);
-  const history = useHistory();
 
   const classes = useStyles({ loading });
 
@@ -31,7 +29,7 @@ const Login = ({ login, loading, error }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    login(user, history);
+    signIn(user);
   };
 
   // todo (api):
@@ -107,4 +105,4 @@ const Login = ({ login, loading, error }) => {
   );
 };
 
-export default Login;
+export default SignIn;

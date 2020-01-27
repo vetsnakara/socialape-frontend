@@ -1,17 +1,19 @@
 import { combineReducers } from "redux";
 
-import userReducer from "./user";
-import postReducer from "./post";
-import loadingReducer from "./loading";
-import errorReducer from "./error";
 import authReducer from "./auth";
+import userReducer from "./user";
+import postsReducer from "./posts";
+import loadingReducer from "./loading";
+import errorsReducer from "./errors";
+import uiReducer from "./ui";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
-  posts: postReducer,
+  posts: postsReducer,
   loading: loadingReducer,
-  error: errorReducer
+  errors: errorsReducer,
+  ui: uiReducer
 });
 
 export default rootReducer;

@@ -1,12 +1,21 @@
-export const REQUEST_START = "REQUEST_START";
-export const REQUEST_END = "REQUEST_END";
+// scope name
+const scope = "loading";
 
-export const setRequestStart = feature => {
-  return {
-    type: `${feature.toUpperCase()}_${REQUEST_START}`
-  };
-};
+// action types
+export const SET_LOADING = `[${scope}] SET_LOADING`;
+export const CLEAR_LOADING = `[${scope}] CLEAR_LOADING`;
 
-export const setRequestEnd = feature => ({
-  type: `${feature.toUpperCase()}_${REQUEST_END}`
+// action creators
+export const setLoading = actionType => ({
+  type: SET_LOADING,
+  payload: {
+    actionType
+  }
+});
+
+export const clearLoading = actionType => ({
+  type: CLEAR_LOADING,
+  payload: {
+    actionType
+  }
 });

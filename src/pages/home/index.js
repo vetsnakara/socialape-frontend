@@ -1,13 +1,13 @@
 import HomePage from "./home";
 import { connect } from "react-redux";
-import { FEATURE_NAME } from "../../redux/actions/post";
+import { FETCH_POSTS } from "../../redux/actions/posts";
 
-import { fetchPosts } from "../../redux/actions/post";
+import { fetchPosts } from "../../redux/actions/posts";
 
 const mapState = state => ({
   posts: state.posts,
-  loading: state.loading.includes(FEATURE_NAME)
-  // error: state.errors
+  loading: state.loading.includes(FETCH_POSTS),
+  error: state.errors[FETCH_POSTS]
 });
 
 const mapDispatch = dispatch => ({

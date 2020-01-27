@@ -1,20 +1,28 @@
-import { UNAUTH_SET_DATA } from "../actions/auth";
-import { USER_DETAILS_SET_DATA } from "../actions/user/details";
-import { IMAGE_UPLOAD_SET_DATA } from "../actions/user/image";
+import {
+  SET_USER_DETAILS,
+  SET_UPDATED_USER_DETAILS,
+  SET_USER_IMAGE
+} from "../actions/user";
 
-const initialState = {
-  credentials: {},
-  likes: [],
-  notifications: []
-};
+import { SET_USER_UNAUTH } from "../actions/auth";
+
+// const initialState = {
+//   credentials: {},
+//   likes: [],
+//   notifications: []
+// };
+
+const initialState = null;
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case USER_DETAILS_SET_DATA:
+    case SET_USER_DETAILS:
       return setUserDetails(action);
-    case IMAGE_UPLOAD_SET_DATA:
+    case SET_UPDATED_USER_DETAILS:
+      return changeUserDetails(state, action);
+    case SET_USER_IMAGE:
       return setImageUrl(state, action);
-    case UNAUTH_SET_DATA:
+    case SET_USER_UNAUTH:
       return clearUserDetails();
     default:
       return state;
@@ -22,10 +30,10 @@ const userReducer = (state = initialState, action) => {
 };
 
 const setUserDetails = action => ({
-  ...action.payload.data
+  ...action.payload.details
 });
 
-const clearUserDetails = action => initialState;
+const clearUserDetails = () => initialState;
 
 const setImageUrl = (state, action) => {
   const { credentials } = state;
@@ -33,7 +41,18 @@ const setImageUrl = (state, action) => {
     ...state,
     credentials: {
       ...credentials,
-      imgUrl: action.payload.data.imgUrl
+      imgUrl: action.payload.imgUrl
+    }
+  };
+};
+
+const changeUserDetails = (state, action) => {
+  const { credentials } = state;
+  return {
+    ...state,
+    credentials: {
+      ...credentials,
+      ...action.payload.updatedDetails
     }
   };
 };

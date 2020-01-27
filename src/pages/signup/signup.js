@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   TextField,
   Grid,
@@ -19,9 +19,8 @@ const initialState = {
   passwordConfirm: ""
 };
 
-const Signup = ({ signup, loading, error }) => {
+const Signup = ({ signUp, loading, error }) => {
   const [user, setUser] = useState(initialState);
-  const history = useHistory();
   const classes = useStyles({ loading });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -33,7 +32,7 @@ const Signup = ({ signup, loading, error }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    signup(user, history);
+    signUp(user);
   };
 
   // todo (api):
@@ -128,7 +127,7 @@ const Signup = ({ signup, loading, error }) => {
           )}
 
           <small className={classes.signUpLink}>
-            Already have an account? Log in <Link to="/login">here.</Link>
+            Already have an account? Log in <Link to="/signin">here.</Link>
           </small>
         </form>
       </Grid>

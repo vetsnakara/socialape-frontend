@@ -1,42 +1,57 @@
-import { setRequestStart, setRequestEnd } from "../actions/loading";
-import { clearError, setError } from "../actions/error";
+/* eslint-disable default-case */
+import { clearErrors } from "../actions/errors";
+import { setLoading, clearLoading } from "../actions/loading";
+import matchApiStatus from "../../utils/matchApiStatus";
 
-const setData = (feature, data) => ({
-  type: `${feature.toUpperCase()}_SET_DATA`,
-  payload: { data }
-});
+const apiMiddleware = () => next => action => {
+  // we swallow action if it not matches with pending|success|error
+  const match = matchApiStatus(action.type);
+  if (!match) return next(action);
 
-const apiMiddleware = ({ dispatch }) => next => action => {
-  const { type } = action;
-
-  if (!["API_REQUEST", "API_SUCCESS", "API_ERROR"].includes(type)) {
-    return next(action);
+  switch (match.groups.status) {
+    case "pending":
+      processPending(next, action);
+      break;
+    case "success":
+      processSuccess(next, action);
+      break;
+    case "error":
+      processError(next, action);
+      break;
   }
+};
 
+const processPending = (next, action) => {
   const {
-    payload: { feature }
+    payload: { thunk, data },
+    meta: { actionType }
   } = action;
 
-  switch (action.type) {
-    case "API_REQUEST":
-      const { thunk, args } = action.payload;
-      dispatch(setRequestStart(feature));
-      dispatch(clearError(feature));
-      dispatch(args ? thunk(args) : thunk);
-      break;
-    case "API_SUCCESS":
-      const { data } = action.payload;
-      dispatch(setData(feature, data));
-      dispatch(setRequestEnd(feature));
-      break;
-    case "API_ERROR":
-      const { error } = action.payload;
-      dispatch(setError(feature, error));
-      dispatch(setRequestEnd(feature));
-      break;
-    default:
-      next(action); // ???
-  }
+  next(clearErrors());
+  next(setLoading(actionType));
+  next(data ? thunk(data) : thunk);
+};
+
+const processSuccess = (next, action) => {
+  const {
+    payload: { successAction },
+    meta: { actionType }
+  } = action;
+
+  next(successAction);
+  next(clearLoading(actionType));
+};
+
+const processError = (next, action) => {
+  const {
+    payload: { errorAction },
+    meta: { actionType }
+  } = action;
+
+  const enrichedErrorAction = { ...errorAction, meta: { actionType } };
+
+  next(enrichedErrorAction);
+  next(clearLoading(actionType));
 };
 
 export default apiMiddleware;

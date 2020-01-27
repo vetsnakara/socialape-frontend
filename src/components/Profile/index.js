@@ -1,23 +1,30 @@
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { fetchAuthUserDetails } from "../../redux/actions/user/details";
-import { uploadImage } from "../../redux/actions/user/image";
-import { FEATURE_NAME as FETCH_USER_DETAILS } from "../../redux/actions/user/details";
-import { FEATURE_NAME as UPLOAD_USER_IMAGE } from "../../redux/actions/user/image";
+import { signOut } from "../../redux/actions/auth";
+import {
+  fetchUserDetails,
+  uploadUserImage,
+  FETCH_USER_DETAILS,
+  UPLOAD_USER_IMAGE,
+  UPDATE_USER_DETAILS
+} from "../../redux/actions/user";
 
 // todo: use selectors (reselect)
 const mapState = state => ({
   authenticated: state.auth.authenticated,
-  loading: [FETCH_USER_DETAILS, UPLOAD_USER_IMAGE].some(feature =>
-    state.loading.includes(feature)
-  ),
+  loading: [
+    FETCH_USER_DETAILS,
+    UPLOAD_USER_IMAGE
+    // UPDATE_USER_DETAILS
+  ].some(feature => state.loading.includes(feature)),
   user: state.user,
-  error: null // handle error
+  error: null // todo: add error handling
 });
 
 const mapDispatch = dispatch => ({
-  fetchUser: () => dispatch(fetchAuthUserDetails()),
-  uploadImage: image => dispatch(uploadImage(image))
+  fetchUser: () => dispatch(fetchUserDetails()),
+  signOut: () => dispatch(signOut()),
+  uploadImage: imageData => dispatch(uploadUserImage(imageData))
 });
 
 export default connect(mapState, mapDispatch)(Profile);
