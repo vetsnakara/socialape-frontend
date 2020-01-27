@@ -7,6 +7,8 @@
 // todo: remove unused code (contexts, e.t.c)
 // todo: implement optimistic updates (use undoable reducer enhancer (see. Thinking in Redux))
 // todo: handle error requestNotReceived
+// todo: create home link in navbar
+// todo: remove global css from App.css (use css-in-js)
 
 import React from "react";
 import { connect } from "react-redux";

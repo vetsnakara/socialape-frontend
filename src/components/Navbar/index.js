@@ -2,7 +2,7 @@ import Navbar from "./Navbar";
 import { connect } from "react-redux";
 
 const mapState = state => ({
-  auth: state.auth
+  authenticated: state.auth.authenticated
 });
 
 export default connect(mapState)(Navbar);

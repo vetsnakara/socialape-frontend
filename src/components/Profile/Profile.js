@@ -10,7 +10,6 @@ import {
   Button,
   Link as MuiLink,
   Typography,
-  IconButton,
   Tooltip
 } from "@material-ui/core";
 
@@ -24,6 +23,7 @@ import {
 
 // componetns
 import EditDetails from "../EditDetails";
+import IconButton from "../IconButton";
 
 // utils
 import datetime from "../../utils/datetime";
@@ -82,11 +82,13 @@ const ProfileAuth = ({ user, uploadImage, signOut }) => {
             id="imageInput"
             hidden="hidden"
           />
-          <Tooltip title="Edit profile picture" placement="top">
-            <IconButton onClick={handleEditPicture} className="button">
-              <EditIcon color="primary" />
-            </IconButton>
-          </Tooltip>
+          <IconButton
+            tipTitle="Change picture"
+            onClick={handleEditPicture}
+            btnClassName="button"
+          >
+            <EditIcon color="primary" />
+          </IconButton>
         </div>
         <hr />
         <div className="profile-details">
@@ -120,10 +122,12 @@ const ProfileAuth = ({ user, uploadImage, signOut }) => {
           <CalendarTodayIcon color="primary" />{" "}
           <span>Joined {datetime.format(createdAt, "MM YYYY")}</span>
           <div className={classes.buttonsAuth}>
-            <IconButton onClick={signOut}>
-              <Tooltip title="Logout" placement="top">
-                <KeyboardReturnIcon color="primary" />
-              </Tooltip>
+            <IconButton
+              tipTitle="Signout"
+              onClick={signOut}
+              btnClassName="button"
+            >
+              <KeyboardReturnIcon color="primary" />
             </IconButton>
             <EditDetails currentDetails={user.credentials} />
           </div>
@@ -146,7 +150,7 @@ const ProfileNonAuth = () => {
             component={Link}
             to="/signin"
           >
-            Login
+            Signin
           </Button>
           <Button
             variant="outlined"

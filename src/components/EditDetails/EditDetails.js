@@ -6,14 +6,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Tooltip,
-  IconButton,
   Button,
   TextField,
   CircularProgress
 } from "@material-ui/core";
 
 import { Edit as EditIcon } from "@material-ui/icons";
+import IconButton from "../IconButton";
 
 // styles
 import useStyles from "./styles";
@@ -48,10 +47,8 @@ const EditDetails = ({
 
   return (
     <React.Fragment>
-      <IconButton onClick={openModal}>
-        <Tooltip title="Edit profile" placement="top">
-          <EditIcon color="primary" />
-        </Tooltip>
+      <IconButton tipTitle="Edit profile" onClick={openModal}>
+        <EditIcon color="primary" />
       </IconButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle id="form-dialog-title">Profile Details</DialogTitle>

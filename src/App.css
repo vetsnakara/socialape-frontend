@@ -23,3 +23,7 @@ a {
 .nav-container {
   justify-content: center;
 }
+
+.nav-container svg {
+  color: #fff;
+}

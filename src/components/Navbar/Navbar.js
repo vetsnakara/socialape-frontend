@@ -2,15 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { AppBar, Toolbar, Button } from "@material-ui/core";
+import {
+  Add as AddIcon,
+  Notifications as NotificationsIcon,
+  Home as HomeIcon
+} from "@material-ui/icons";
 
-const Navbar = ({ auth }) => {
+import IconButton from "../IconButton";
+
+const Navbar = ({ authenticated }) => {
   return (
     <AppBar>
       <Toolbar className="nav-container">
-        <Button color="inherit" to="/" component={Link}>
-          Home
-        </Button>
-        {auth.authenticated ? <NavbarItemsAuth /> : <NavbarItemsNonAuth />}
+        {authenticated ? <NavbarItemsAuth /> : <NavbarItemsNonAuth />}
       </Toolbar>
     </AppBar>
   );
@@ -19,12 +23,15 @@ const Navbar = ({ auth }) => {
 const NavbarItemsAuth = () => {
   return (
     <React.Fragment>
-      <Button color="inherit" to={`/profile`} component={Link}>
-        Profile
-      </Button>
-      <Button color="inherit" to="/signout" component={Link}>
-        Signout
-      </Button>
+      <IconButton tipTitle="Home" component={Link} to="/">
+        <HomeIcon />
+      </IconButton>
+      <IconButton tipTitle="Create post">
+        <AddIcon />
+      </IconButton>
+      <IconButton tipTitle="Show nofications">
+        <NotificationsIcon />
+      </IconButton>
     </React.Fragment>
   );
 };
