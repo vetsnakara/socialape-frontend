@@ -17,6 +17,11 @@ const api = {
 
   // post
   getPosts: async () => http.get("/post"),
+  delete: async postId => http.delete(`/post/${postId}`),
+
+  // likes
+  like: async postId => http.post(`/like/create/${postId}`),
+  unlike: async postId => http.delete(`/like/delete/${postId}`),
 
   // httpService
   http

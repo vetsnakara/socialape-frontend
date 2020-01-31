@@ -16,7 +16,7 @@ const mapState = state => ({
     FETCH_USER_DETAILS,
     UPLOAD_USER_IMAGE
     // UPDATE_USER_DETAILS
-  ].some(feature => state.loading.includes(feature)),
+  ].some(feature => state.ui.loading.includes(feature)),
   user: state.user,
   error: null // todo: add error handling
 });

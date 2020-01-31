@@ -11,7 +11,7 @@ import {
 const mapState = state => {
   return {
     open: state.ui.modals[UPDATE_USER_DETAILS],
-    loading: state.loading.includes(UPDATE_USER_DETAILS)
+    loading: state.ui.loading.includes(UPDATE_USER_DETAILS)
   };
 };
 

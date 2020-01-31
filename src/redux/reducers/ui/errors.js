@@ -1,4 +1,4 @@
-import { SET_ERROR, CLEAR_ERRORS } from "../actions/errors";
+import { SET_ERROR, CLEAR_ERRORS } from "../../actions/errors";
 
 const errorsReducer = (state = {}, action) => {
   switch (action.type) {
@@ -16,6 +16,8 @@ const setError = (state, action) => {
     payload: { error },
     meta: { actionType }
   } = action;
+
+  console.log(error);
 
   return {
     ...state,

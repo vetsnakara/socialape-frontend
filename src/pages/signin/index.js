@@ -5,8 +5,8 @@ import { signIn, SIGN_IN } from "../../redux/actions/auth";
 
 const mapState = state => {
   return {
-    loading: state.loading.includes(SIGN_IN),
-    error: state.errors[SIGN_IN]
+    loading: state.ui.loading.includes(SIGN_IN),
+    error: state.ui.errors[SIGN_IN]
   };
 };
 

@@ -1,4 +1,4 @@
-import { SET_LOADING, CLEAR_LOADING } from "../actions/loading";
+import { SET_LOADING, CLEAR_LOADING } from "../../actions/loading";
 
 const loadingReducer = (state = [], action) => {
   switch (action.type) {

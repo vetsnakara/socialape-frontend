@@ -4,6 +4,8 @@ import {
   SET_USER_IMAGE
 } from "../actions/user";
 
+import { ADD_LIKE, REMOVE_LIKE } from "../actions/likes";
+
 import { SET_USER_UNAUTH } from "../actions/auth";
 
 // const initialState = {
@@ -24,6 +26,10 @@ const userReducer = (state = initialState, action) => {
       return setImageUrl(state, action);
     case SET_USER_UNAUTH:
       return clearUserDetails();
+    case ADD_LIKE:
+      return addLike(state, action);
+    case REMOVE_LIKE:
+      return removeLike(state, action);
     default:
       return state;
   }
@@ -54,6 +60,34 @@ const changeUserDetails = (state, action) => {
       ...credentials,
       ...action.payload.updatedDetails
     }
+  };
+};
+
+const addLike = (state, action) => {
+  const {
+    likes,
+    credentials: { handle }
+  } = state;
+  const { postId } = action.payload;
+
+  const newLike = {
+    handle,
+    postId
+  };
+
+  return {
+    ...state,
+    likes: [...likes, newLike]
+  };
+};
+
+const removeLike = (state, action) => {
+  const { likes } = state;
+  const { postId } = action.payload;
+
+  return {
+    ...state,
+    likes: likes.filter(like => like.postId !== postId)
   };
 };
 

@@ -1,3 +1,4 @@
+// todo: add loading indicator for background processes
 // todo: use absolute import paths
 // todo: add toast notifications
 // todo: add proptypes everywhere
@@ -9,6 +10,7 @@
 // todo: handle error requestNotReceived
 // todo: create home link in navbar
 // todo: remove global css from App.css (use css-in-js)
+// todo: make app responsive
 
 import React from "react";
 import { connect } from "react-redux";

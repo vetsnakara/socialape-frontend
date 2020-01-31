@@ -6,8 +6,8 @@ import { fetchPosts } from "../../redux/actions/posts";
 
 const mapState = state => ({
   posts: state.posts,
-  loading: state.loading.includes(FETCH_POSTS),
-  error: state.errors[FETCH_POSTS]
+  loading: state.ui.loading.includes(FETCH_POSTS),
+  error: state.ui.errors[FETCH_POSTS]
 });
 
 const mapDispatch = dispatch => ({
