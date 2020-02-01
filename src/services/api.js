@@ -1,7 +1,6 @@
 import HttpService from "./http";
 
-// const API_ROOT = process.env.REACT_APP_API_ROOT || "http://localhost:3000";
-const API_ROOT = "/"; // proxy is userd
+const API_ROOT = process.env.NODE_ENV === "production" ? process.env.REACT_APP_API_ROOT : "/";
 
 const http = new HttpService({ baseURL: API_ROOT });
 
