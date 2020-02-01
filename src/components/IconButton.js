@@ -6,13 +6,13 @@ export default ({
   onClick,
   tipTitle,
   tipPlacement = "top",
-  tipClassName,
   btnClassName,
+  className,
   children,
   ...rest
 }) => {
   return (
-    <Tooltip title={tipTitle} placement={tipPlacement} className={tipClassName}>
+    <Tooltip title={tipTitle} placement={tipPlacement} className={className}>
       <IconButton onClick={onClick} className={btnClassName} {...rest}>
         {children}
       </IconButton>

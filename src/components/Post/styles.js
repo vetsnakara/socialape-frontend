@@ -5,7 +5,8 @@ export default {
   },
 
   content: {
-    padding: 25
+    padding: 25,
+    width: "100%"
   },
 
   image: {
@@ -13,6 +14,17 @@ export default {
   },
 
   actions: {
-    display: "flex"
+    display: "flex",
+    alignItems: "center"
+  },
+
+  likeCount: {
+    display: "flex",
+    alignItems: "center",
+    marginRight: "1rem"
+  },
+
+  deleteButton: {
+    marginLeft: "auto"
   }
 };

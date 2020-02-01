@@ -72,17 +72,22 @@ const Post = ({
         {/* todo: component for actions (like, unlike, delete) */}
         <div className={classes.actions}>
           {/* todo: make component LikeCount */}
-          <Like
-            isLiked={isLiked}
-            onClick={handleLikeClick}
-            disabled={!authenticated}
-          />{" "}
-          <span>
-            {post.likeCount} {`like${likeCount !== 1 ? "s" : ""}`}
-          </span>
+          <div className={classes.likeCount}>
+            <Like
+              isLiked={isLiked}
+              onClick={handleLikeClick}
+              disabled={!authenticated}
+            />{" "}
+            <span>
+              {post.likeCount} {`like${likeCount !== 1 ? "s" : ""}`}
+            </span>
+          </div>
           <CommentCount count={commentCount} />
           {user && user.handle === userHandle && (
-            <DeleteButton onClickDelete={() => handleDelete(post.id)}>
+            <DeleteButton
+              onClickDelete={() => handleDelete(post.id)}
+              className={classes.deleteButton}
+            >
               Are you sure you want to delete this post?
             </DeleteButton>
           )}

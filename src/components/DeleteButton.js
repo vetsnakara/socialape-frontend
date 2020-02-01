@@ -9,8 +9,8 @@ import { Delete as DeleteIcon } from "@material-ui/icons";
 
 import IconButton from "./IconButton";
 
-const DeleteButton = ({ onClickDelete, children }) => {
-  const [open, setOpen] = useState(true);
+const DeleteButton = ({ onClickDelete, className, children }) => {
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => setOpen(true);
   const handleClickClose = () => setOpen(false);
@@ -22,7 +22,11 @@ const DeleteButton = ({ onClickDelete, children }) => {
 
   return (
     <React.Fragment>
-      <IconButton tipTitle="Delete post" onClick={handleClickOpen}>
+      <IconButton
+        tipTitle="Delete post"
+        onClick={handleClickOpen}
+        className={className}
+      >
         <DeleteIcon color="primary" />
       </IconButton>
       <Dialog open={open} onClose={handleClickClose}>
