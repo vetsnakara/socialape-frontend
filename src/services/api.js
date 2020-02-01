@@ -17,6 +17,7 @@ const api = {
 
   // post
   getPosts: async () => http.get("/post"),
+  create: async body => http.post("/post", { body }),
   delete: async postId => http.delete(`/post/${postId}`),
 
   // likes

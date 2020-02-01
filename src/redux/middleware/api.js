@@ -29,7 +29,7 @@ const processPending = (next, action) => {
 
   next(clearErrors());
   next(setLoading(actionType));
-  next(data ? thunk(data) : thunk);
+  next(data !== undefined ? thunk(data) : thunk);
 };
 
 const processSuccess = (next, action) => {

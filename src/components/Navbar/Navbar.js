@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 import {
-  Add as AddIcon,
   Notifications as NotificationsIcon,
   Home as HomeIcon
 } from "@material-ui/icons";
 
 import IconButton from "../IconButton";
+import AddPost from "../AddPost";
 
 const Navbar = ({ authenticated }) => {
   return (
@@ -26,9 +26,7 @@ const NavbarItemsAuth = () => {
       <IconButton tipTitle="Home" component={Link} to="/">
         <HomeIcon />
       </IconButton>
-      <IconButton tipTitle="Create post">
-        <AddIcon />
-      </IconButton>
+      <AddPost />
       <IconButton tipTitle="Show nofications">
         <NotificationsIcon />
       </IconButton>

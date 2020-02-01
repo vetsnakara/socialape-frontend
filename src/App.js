@@ -11,6 +11,7 @@
 // todo: create home link in navbar
 // todo: remove global css from App.css (use css-in-js)
 // todo: make app responsive
+// todo: create separate Dialog component for all Dialogs (w/ redux open/close state management)
 
 import React from "react";
 import { connect } from "react-redux";
