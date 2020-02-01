@@ -10,5 +10,9 @@ export default {
 
   image: {
     minWidth: 200
+  },
+
+  actions: {
+    display: "flex"
   }
 };

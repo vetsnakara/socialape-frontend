@@ -4,11 +4,11 @@ import debounce from "lodash/debounce";
 
 import { withStyles } from "@material-ui/core/styles";
 import { Card, CardMedia, Typography, CardContent } from "@material-ui/core";
-import { Delete as DeleteIcon } from "@material-ui/icons";
 
 import Like from "../Like";
 import CommentCount from "../CommentCount";
 import IconButton from "../IconButton";
+import DeleteButton from "../DeleteButton";
 
 import datetime from "../../utils/datetime";
 
@@ -38,12 +38,7 @@ const Post = ({
     }
   }, 300);
 
-  const handleDelete = postId => {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm("Are you sure?")) {
-      deletePost(postId);
-    }
-  };
+  const handleDelete = postId => deletePost(postId);
 
   const {
     body,
@@ -75,27 +70,22 @@ const Post = ({
         </Typography>
         <Typography variant="body1">{body}</Typography>
         {/* todo: component for actions (like, unlike, delete) */}
-        <div>
-          <div>
-            {/* todo: make component LikeCount */}
-            <Like
-              isLiked={isLiked}
-              onClick={handleLikeClick}
-              disabled={!authenticated}
-            />{" "}
-            <span>
-              {post.likeCount} {`like${likeCount !== 1 ? "s" : ""}`}
-            </span>
-            <CommentCount count={commentCount} />
-            {user && user.handle === userHandle && (
-              <IconButton
-                tipTitle="Delete post"
-                onClick={() => handleDelete(post.id)}
-              >
-                <DeleteIcon color="primary" />
-              </IconButton>
-            )}
-          </div>
+        <div className={classes.actions}>
+          {/* todo: make component LikeCount */}
+          <Like
+            isLiked={isLiked}
+            onClick={handleLikeClick}
+            disabled={!authenticated}
+          />{" "}
+          <span>
+            {post.likeCount} {`like${likeCount !== 1 ? "s" : ""}`}
+          </span>
+          <CommentCount count={commentCount} />
+          {user && user.handle === userHandle && (
+            <DeleteButton onClickDelete={() => handleDelete(post.id)}>
+              Are you sure you want to delete this post?
+            </DeleteButton>
+          )}
         </div>
       </CardContent>
     </Card>
